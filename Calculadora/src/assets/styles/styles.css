@@ -6,21 +6,34 @@ body {
 }
 
 .container-calculator {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     flex-direction: column;
+    justify-items: center;
     background-color: #818cf8;
-    gap: 15px;
     align-items: center;
     height: 100vh;
 }
 
-.tilte-calculator {
+.container-grafo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    width: 500px;
+}
+
+.tilte-calculator, .title-arbol {
     font-family: "Bebas Neue", sans-serif;
     text-align: center;
     color: #f0f9ff;
     font-size: 36px;
     font-weight: 400;
+}
+
+.tilte-calculator {
+    grid-column: span 2;
 }
 
 .calculator-operation {
@@ -34,6 +47,7 @@ body {
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(94, 89, 89, 0.574);
+    margin-bottom: 20px;
 }
 
 .input-resultado {

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import * as math from 'mathjs';
-import Tree from './Tree';
 import Graph from './Graph';
 import '../assets/styles/styles.css';
 
@@ -11,6 +10,7 @@ function operation() {
     const [nodes, setNodes] = useState([]);
     const [links, setLinks] = useState([]);
     const displayRef = useRef(null);
+    const [Grapvisible, setGrapvisible] = useState(false);
 
     const handlerClick = (e) => {
         e.preventDefault();
@@ -24,6 +24,7 @@ function operation() {
         setDisplay(e.target.value);
         setNodes([]);
         displayRef.current.focus();
+        setGrapvisible(false)
     }
 
     const resultOperation = (e) => {
@@ -42,11 +43,13 @@ function operation() {
         setLinks(newLinks);
         //posicionamos el focus en el input
         displayRef.current.focus();
+        //para hacer que aparesca el grafo cuando se necesita mientra es falso esta oculto
+        setGrapvisible(true)
     }
 
     const handlerShow = (e) => {
         e.preventDefault();
-        setIsShow(!isShow);
+        setIsShow(!isShow); 
     }
 
     useEffect(() => {
@@ -58,7 +61,7 @@ function operation() {
             <div className='container-calculator'>
                 <h1 className='tilte-calculator'>Calculadora de operaciones</h1>
                 <div className='calculator-operation'>
-                    <input ref={displayRef} type="text" className='input-resultado' value={display} placeholder='550 + 440' name='display' />
+                    <input ref={displayRef} type="text" className='input-resultado' value={display} placeholder='0' name='display' />
 
                     <button className="button-calculator" value='7' onClick={handlerClick}>7</button>
                     <button className="button-calculator" value='8' onClick={handlerClick}>8</button>
@@ -83,10 +86,14 @@ function operation() {
 
                     <button className="button-calculator" onClick={resultOperation}>=</button>
                 </div>
+                <div className='container-grafo'>
+                    <h1 className='title-arbol'>Arbol de operacion</h1>
+                    {Grapvisible && (
+                        <Graph nodes={nodes} />
+                    )}
+                </div>
             </div>
-            <button onClick={handlerShow}>Mostrar Rutas de equivalencia</button>
-            <Graph nodes={nodes} />
-            
+
         </>
     );
 }

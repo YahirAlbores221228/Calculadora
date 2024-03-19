@@ -15,7 +15,7 @@ function Graph({nodes}) {
                 }).join('\n')}
             }
         `} 
-        options={{ width: 200, height: 200 }} />
+        options={{width: 200, height: 500 }}/>
     );
 }
 
