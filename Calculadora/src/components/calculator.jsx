@@ -6,11 +6,11 @@ import '../assets/styles/styles.css';
 function operation() {
 
     const [display, setDisplay] = useState('');
-    const [isShow, setIsShow] = useState(false);
     const [nodes, setNodes] = useState([]);
     const [links, setLinks] = useState([]);
     const displayRef = useRef(null);
     const [Grapvisible, setGrapvisible] = useState(false);
+    const [tokens, setTonkens] = useState([]);
 
     const handlerClick = (e) => {
         e.preventDefault();
@@ -25,31 +25,67 @@ function operation() {
         setNodes([]);
         displayRef.current.focus();
         setGrapvisible(false)
+        setTonkens([])
     }
 
     const resultOperation = (e) => {
         e.preventDefault();
-        //math.evaluate toma una cadena de texto que representa una expresión matemática y devuelve el resultado de evaluar esa expresión. 
-        const result = math.evaluate(display);
-        //guardamos el resultado en setDisplay para mostrarlo en el input result
-        setDisplay(result);
-        //de a cuerdo a lo que ahora es display, lo separamos en un array de caracteres 
-        const newNodes = display.split('')
-        //lo guardamos en nodos
-        setNodes(newNodes);
-        //con map creamos un nuevo array de links donde por cada elemento del array de nodos creamos un objeto con el nodo anterior como source y el nodo actual como target
-        const newLinks = newNodes.map((node, index) => ({ source: newNodes[index - 1], target: node }));
-        //lo guardamos en links
-        setLinks(newLinks);
-        //posicionamos el focus en el input
-        displayRef.current.focus();
-        //para hacer que aparesca el grafo cuando se necesita mientra es falso esta oculto
-        setGrapvisible(true)
-    }
 
-    const handlerShow = (e) => {
-        e.preventDefault();
-        setIsShow(!isShow); 
+        try {
+
+            //definimos una variable que almacenara la operacion a realizar donde incluye los  valores ingresados en "display" en operador
+            const token = display.match(/(\d+(\.\d+)?|[\+\-\*\/\(\)])\s*/g);
+            // indicamos que si no  hay tokens se devuelve un array vacio y marca error
+            if (!token) {
+                setDisplay("Error");
+                return;
+            }
+
+            //Convierte una serie de tokens en un nuevo array de objetos, donde determina si  es un número o operador y guardamos en el estado settokens para hacer el analisis lexico
+            const tok = token.map(token => {
+                let type;
+                switch (token) {
+                    case '+':
+                        type = 'Suma';
+                        break;
+                    case '-':
+                        type = 'Resta';
+                        break;
+                    case '*':
+                        type = 'Multi';
+                        break;
+                    case '/':
+                        type = 'División';
+                        break;
+                    default:
+                        type = 'Número';
+                        break;
+                }
+                return { type, value: token };
+            });
+            // Lo guardamos en el estado y ese estado se utiliza en una etiqueta  de JSX para pintar el proceso lexico
+            setTonkens(tok);
+
+            //math.evaluate toma una cadena de texto que representa una expresión matemática y devuelve el resultado de evaluar esa expresión. 
+            const result = math.evaluate(display);
+            //guardamos el resultado en setDisplay para mostrarlo en el input result
+            setDisplay(result);
+            //de a cuerdo a lo que ahora es display, lo separamos en un array de caracteres 
+            const newNodes = display.split('')
+            //lo guardamos en nodos
+            setNodes(newNodes);
+            //con map creamos un nuevo array de links donde por cada elemento del array de nodos creamos un objeto con el nodo anterior como source y el nodo actual como target
+            const newLinks = newNodes.map((node, index) => ({ source: newNodes[index - 1], target: node }));
+            //lo guardamos en links
+            setLinks(newLinks);
+            //posicionamos el focus en el input
+            displayRef.current.focus();
+            //para hacer que aparesca el grafo cuando se necesita mientra es falso esta oculto
+            setGrapvisible(true)
+
+        } catch (error) {
+            setDisplay("Error")
+        }
     }
 
     useEffect(() => {
@@ -92,6 +128,14 @@ function operation() {
                         <Graph nodes={nodes} />
                     )}
                 </div>
+
+                <div className='container-lexico'>
+                    <h1 className='title-arbol'>Analizador lexico</h1>
+                    {tokens.map((token, index) => (
+                        <li className='item-position' key={index}>Valor: {token.value}, Tipo: {token.type}</li>
+                    ))}
+                </div>
+
             </div>
 
         </>

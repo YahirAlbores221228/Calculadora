@@ -7,12 +7,12 @@ body {
 
 .container-calculator {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     flex-direction: column;
     justify-items: center;
     background-color: #818cf8;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container-grafo {
@@ -24,7 +24,20 @@ body {
     width: 500px;
 }
 
-.tilte-calculator, .title-arbol {
+.container-lexico {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.item-position {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    font-weight: 200;
+}
+
+.tilte-calculator,
+.title-arbol {
     font-family: "Bebas Neue", sans-serif;
     text-align: center;
     color: #f0f9ff;
@@ -33,7 +46,7 @@ body {
 }
 
 .tilte-calculator {
-    grid-column: span 2;
+    grid-column: span 3;
 }
 
 .calculator-operation {
