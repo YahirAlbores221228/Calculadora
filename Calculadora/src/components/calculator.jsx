@@ -7,7 +7,6 @@ function operation() {
 
     const [display, setDisplay] = useState('');
     const [nodes, setNodes] = useState([]);
-    const [links, setLinks] = useState([]);
     const displayRef = useRef(null);
     const [Grapvisible, setGrapvisible] = useState(false);
     const [tokens, setTonkens] = useState([]);
@@ -46,19 +45,24 @@ function operation() {
                 let type;
                 switch (token) {
                     case '+':
-                        type = 'Suma';
+                        type = 'Operador Suma';
                         break;
                     case '-':
-                        type = 'Resta';
+                        type = 'Operador Resta';
                         break;
                     case '*':
-                        type = 'Multi';
+                        type = 'Operador Multi';
                         break;
                     case '/':
-                        type = 'División';
+                        type = 'Operador División';
                         break;
                     default:
-                        type = 'Número';
+                        // Verifica si el token es un número float
+                        if (/^\d+\.\d+$/.test(token)) {
+                            type = 'Float';
+                        } else {
+                            type = 'INT';
+                        }
                         break;
                 }
                 return { type, value: token };
@@ -74,10 +78,6 @@ function operation() {
             const newNodes = display.split('')
             //lo guardamos en nodos
             setNodes(newNodes);
-            //con map creamos un nuevo array de links donde por cada elemento del array de nodos creamos un objeto con el nodo anterior como source y el nodo actual como target
-            const newLinks = newNodes.map((node, index) => ({ source: newNodes[index - 1], target: node }));
-            //lo guardamos en links
-            setLinks(newLinks);
             //posicionamos el focus en el input
             displayRef.current.focus();
             //para hacer que aparesca el grafo cuando se necesita mientra es falso esta oculto
