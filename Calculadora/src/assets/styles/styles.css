@@ -99,6 +99,10 @@ body {
     transition: 0.2s all;
 }
 
+.button-calculator:active {
+    background-color: #a5b4fc;
+}
+
 /*Para indicar que elemento queremos modificar*/
 .button-calculator:nth-of-type(4),
 .button-calculator:nth-of-type(8),
