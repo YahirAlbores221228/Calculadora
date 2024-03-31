@@ -13,6 +13,8 @@ body {
     background-color: #818cf8;
     align-items: center;
     min-height: 100vh;
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 .container-grafo {
@@ -21,13 +23,14 @@ body {
     align-items: center;
     flex-direction: column;
     height: auto;
-    width: 500px;
+    width: auto;
 }
 
 .container-lexico {
     display: flex;
     flex-direction: column;
     text-align: center;
+    width: 100%;
 }
 
 .item-position {
@@ -77,7 +80,8 @@ body {
     border: none;
     font-size: 24px;
     outline: none;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, .2);
+    background: #ffffff;
+    box-shadow: inset -5px -5px 9px rgba(255, 255, 255, 0.45), inset 0px 0px 9px rgba(94, 104, 121, 0.3);
 }
 
 .input-resultado::placeholder {
@@ -97,6 +101,7 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, .2);
     cursor: pointer;
     transition: 0.2s all;
+    box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45), 5px 5px 9px rgba(94, 104, 121, 0.3);
 }
 
 .button-calculator:active {
@@ -123,4 +128,26 @@ body {
 .button-calculator-igual:hover,
 .button-calculator:hover {
     scale: 1.1;
+}
+
+@media only screen and (max-width: 575.98px) {
+    .container-calculator {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .tilte-calculator {
+        grid-column: span 1;
+    }
+
+    .button-calculator {
+        height: 50px;
+        width: 50px;
+        font-size: 20px;
+    }
+
+    .tilte-calculator,
+    .title-arbol {
+        font-size: 28px;
+    }
 }
